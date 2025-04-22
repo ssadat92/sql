@@ -29,7 +29,9 @@ filtered by vendor IDs between 8 and 10 (inclusive) using either:
 	2.  one condition using BETWEEN
 */
 -- option 1
-
+select product_id, vendor_id, market_date, customer_id, quantity, cost_to_customer_per_qty, transaction_time,
+quantity*cost_to_customer_per_qty as price
+from customer_purchases where vendor_id >=8 and vendor_id <=10
 -- option 2
 select product_id, vendor_id, market_date, customer_id, quantity, cost_to_customer_per_qty, transaction_time,
 quantity*cost_to_customer_per_qty as price
@@ -68,7 +70,7 @@ vendor_id field they both have in common, and sorts the result by vendor_name, t
  select * 
  from vendor  
  inner JOIN vendor_booth_assignments  on vendor.vendor_id = vendor_booth_assignments.vendor_id
- group by vendor_name, market_date
+ order by vendor_name, market_date
 
 
 
@@ -87,12 +89,13 @@ sticker to everyone who has ever spent more than $2000 at the market. Write a qu
 of customers for them to give stickers to, sorted by last name, then first name. 
 
 HINT: This query requires you to join two tables, use an aggregate function, and use the HAVING keyword. */
-SELECT customer_first_name, customer_last_name, sum(quantity * cost_to_customer_per_qty)
+SELECT customer_first_name, customer_last_name, sum(quantity * cost_to_customer_per_qty) as total_spend
 FROM customer
 INNER JOIN customer_purchases
 ON customer.customer_id = customer_purchases.customer_id
 GROUP BY  customer_first_name, customer_last_name
-having sum(quantity * cost_to_customer_per_qty) > 2000;
+having sum(quantity * cost_to_customer_per_qty) > 2000
+order by customer_last_name,customer_first_name
 
 
 --Temp Table
