@@ -55,7 +55,7 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 
 ```
 Your answer...
-```
+Type 1 will override changes while type 2 will add a new record perserving the change and the original value. The store should implement type 2 for better data integrity and traceability. 
 
 ***
 
